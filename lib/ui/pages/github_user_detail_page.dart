@@ -23,7 +23,7 @@ class GithubUserDetailPage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: ListView(
+          child: Column(
             children: [
               Container(
                 width: double.infinity,
@@ -33,11 +33,19 @@ class GithubUserDetailPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 200,
-                height: 200,
-                child: CustomHeroNetworkImage(
-                  imgUrl: githubUser.imgUrl ?? "",
-                  imageShape: ImageShape.circle,
+                width: double.infinity,
+                child: SizedBox(
+                  width: 150,
+                  height: 150,
+                  child: Center(
+                    child: CustomHeroNetworkImage(
+                      imgKey: githubUser.username ?? "",
+                      imgUrl: githubUser.avatarUrl ?? "",
+                      imageShape: ImageShape.circle,
+                      width: 150,
+                      height: 150,
+                    ),
+                  ),
                 ),
               ),
             ],

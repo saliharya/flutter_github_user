@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:githubapp/ui/pages/github_user_detail_page.dart';
-import 'package:githubapp/ui/widgets/custom_hero_network_image.dart';
 
 import '../../data/model/github_user.dart';
+import '../widgets/custom_hero_network_image.dart';
+import 'github_user_detail_page.dart';
 
 class SearchUserPage extends StatelessWidget {
   const SearchUserPage({Key? key, required String title}) : super(key: key);
@@ -40,7 +40,7 @@ class SearchUserPage extends StatelessWidget {
               ),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: githubUsers.length,
+                itemCount: dummyGithubUsers.length,
                 itemBuilder: _buildGithubUserListWidget,
               ),
             ],
@@ -51,7 +51,7 @@ class SearchUserPage extends StatelessWidget {
   }
 
   Widget _buildGithubUserListWidget(BuildContext context, int index) {
-    final githubUser = githubUsers[index];
+    final githubUser = dummyGithubUsers[index];
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -61,6 +61,9 @@ class SearchUserPage extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
+            // onTap: () async {
+            //   var users = await ApiService().searchUsersResponse("saliharya");
+            //   debugPrint(users.toJson().toString());
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -77,15 +80,15 @@ class SearchUserPage extends StatelessWidget {
             child: Row(
               children: [
                 CustomHeroNetworkImage(
-                  imgUrl: githubUser.imgUrl ?? "",
+                  imgKey: githubUser.username ?? "",
+                  imgUrl: githubUser.avatarUrl ?? "",
                   imageShape: ImageShape.circle,
+                  width: 100,
+                  height: 100,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(githubUser.username ?? ""),
-                    Text(githubUser.fullName ?? ""),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 12),
+                  child: Text(githubUser.username ?? ""),
                 )
               ],
             ),
