@@ -22,7 +22,7 @@ class _SearchUserPageState extends State<SearchUserPage> {
     return ChangeNotifierProvider(
       create: (context) => SearchGithubUserProvider(),
       child: Consumer<SearchGithubUserProvider>(
-          builder: (context, searchGithubUserProvider, widget) {
+          builder: (context, searchGithubUserProvider, _) {
         return Scaffold(
           appBar: AppBar(
             title: const Text("Github Search User"),
@@ -46,7 +46,7 @@ class _SearchUserPageState extends State<SearchUserPage> {
                         if (_debounce?.isActive ?? false) _debounce?.cancel();
                         _debounce =
                             Timer(const Duration(milliseconds: 500), () async {
-                          searchGithubUserProvider.searchUsersResponse(text);
+                          searchGithubUserProvider.searchUsers(text);
                         });
                       },
                       decoration: InputDecoration(

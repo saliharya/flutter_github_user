@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import '../model/github_user.dart';
 import '../model/search_users_response.dart';
 
 class ApiService {
@@ -20,6 +21,20 @@ class ApiService {
     );
     if (response.statusCode == 200) {
       return SearchUsersResponse.fromJson(
+        json.decode(response.body),
+      );
+    } else {
+      throw Exception("Failed to load users");
+    }
+  }
+
+  Future<GithubUser?> getUserDetail(String username) async {
+    final response = await http.get(
+      Uri.parse("${_baseUrl}users/$username"),
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      return GithubUser.fromJson(
         json.decode(response.body),
       );
     } else {

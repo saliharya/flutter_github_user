@@ -65,10 +65,3 @@ class GithubUser {
         "following": following,
       };
 }
-
-List<GithubUser> dummyGithubUsers = [
-  GithubUser(
-    username: "sidiqpermana",
-    avatarUrl: "https://avatars.githubusercontent.com/u/4090245?v=4",
-  ),
-];
