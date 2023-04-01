@@ -2,11 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:githubapp/ui/providers/search_github_users_provider.dart';
+import 'package:githubapp/ui/widgets/github_user_list_view.dart';
 import 'package:githubapp/util/result_state.dart';
 import 'package:provider/provider.dart';
-
-import '../widgets/custom_hero_network_image.dart';
-import 'github_user_detail_page.dart';
 
 class SearchUserPage extends StatefulWidget {
   const SearchUserPage({Key? key, required String title}) : super(key: key);
@@ -77,63 +75,8 @@ class _SearchUserPageState extends State<SearchUserPage> {
                               ),
                             )
                           : Expanded(
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount:
-                                    searchGithubUserProvider.githubUsers.length,
-                                itemBuilder: (context, index) {
-                                  final githubUser = searchGithubUserProvider
-                                      .githubUsers[index];
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Card(
-                                      elevation: 8,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      child: InkWell(
-                                        onTap: () {
-                                          // onTap: () async {
-                                          //   var users = await ApiService().searchUsersResponse("saliharya");
-                                          //   debugPrint(users.toJson().toString());
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) {
-                                                return GithubUserDetailPage(
-                                                  githubUser: githubUser,
-                                                );
-                                              },
-                                            ),
-                                          );
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            children: [
-                                              CustomHeroNetworkImage(
-                                                imgKey:
-                                                    githubUser.username ?? "",
-                                                imgUrl:
-                                                    githubUser.avatarUrl ?? "",
-                                                imageShape: ImageShape.circle,
-                                                width: 100,
-                                                height: 100,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 12),
-                                                child: Text(
-                                                    githubUser.username ?? ""),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
+                              child: GithubUserListView(
+                                searchGithubUserProvider.githubUsers,
                               ),
                             ),
                 ],

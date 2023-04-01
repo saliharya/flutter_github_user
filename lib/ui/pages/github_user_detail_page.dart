@@ -4,7 +4,10 @@ import 'package:githubapp/ui/providers/github_user_detail_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/model/github_user.dart';
+import '../providers/user_followers_provider.dart';
+import '../providers/user_following_provider.dart';
 import '../widgets/custom_hero_network_image.dart';
+import '../widgets/github_user_list_view.dart';
 
 class GithubUserDetailPage extends StatefulWidget {
   final GithubUser githubUser;
@@ -17,7 +20,16 @@ class GithubUserDetailPage extends StatefulWidget {
   State<GithubUserDetailPage> createState() => _GithubUserDetailPageState();
 }
 
-class _GithubUserDetailPageState extends State<GithubUserDetailPage> {
+class _GithubUserDetailPageState extends State<GithubUserDetailPage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -73,6 +85,52 @@ class _GithubUserDetailPageState extends State<GithubUserDetailPage> {
                       child: Text(
                           "Followers: ${githubUserDetailProvider.githubUser?.followers ?? 0}"),
                     ),
+                    TabBar(
+                      labelColor: Colors.black,
+                      indicatorColor: Colors.blue,
+                      controller: _tabController,
+                      tabs: const [
+                        Tab(text: "Following"),
+                        Tab(text: "Followers"),
+                      ],
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          ChangeNotifierProvider(
+                            create: (context) => UserFollowingProvider(
+                                widget.githubUser.username ?? ""),
+                            child: Consumer<UserFollowingProvider>(
+                              builder: (
+                                context,
+                                userFollowingProvider,
+                                widget,
+                              ) {
+                                return GithubUserListView(
+                                  userFollowingProvider.githubUsers,
+                                );
+                              },
+                            ),
+                          ),
+                          ChangeNotifierProvider(
+                            create: (context) => UserFollowersProvider(
+                                widget.githubUser.username ?? ""),
+                            child: Consumer<UserFollowersProvider>(
+                              builder: (
+                                context,
+                                userFollowersProvider,
+                                widget,
+                              ) {
+                                return GithubUserListView(
+                                  userFollowersProvider.githubUsers,
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -102,10 +160,5 @@ class _GithubUserDetailPageState extends State<GithubUserDetailPage> {
         },
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 }

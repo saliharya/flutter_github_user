@@ -41,4 +41,30 @@ class ApiService {
       throw Exception("Failed to load users");
     }
   }
+
+  Future<List<GithubUser>> getUserFollowing(String username) async {
+    final response = await http.get(
+      Uri.parse("${_baseUrl}users/$username/following"),
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      final jsonArray = json.decode(response.body) as List;
+      return jsonArray.map((e) => GithubUser.fromJson(e)).toList();
+    } else {
+      throw Exception("Failed to load users");
+    }
+  }
+
+  Future<List<GithubUser>> getUserFollowers(String username) async {
+    final response = await http.get(
+      Uri.parse("${_baseUrl}users/$username/followers"),
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      final jsonArray = json.decode(response.body) as List;
+      return jsonArray.map((e) => GithubUser.fromJson(e)).toList();
+    } else {
+      throw Exception("Failed to load users");
+    }
+  }
 }
