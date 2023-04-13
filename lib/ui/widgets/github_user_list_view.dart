@@ -6,7 +6,11 @@ import 'custom_hero_network_image.dart';
 
 class GithubUserListView extends StatelessWidget {
   final List<GithubUser> githubUsers;
-  const GithubUserListView(this.githubUsers, {Key? key}) : super(key: key);
+  final VoidCallback navigationCallback;
+
+  const GithubUserListView(this.githubUsers, this.navigationCallback,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +37,7 @@ class GithubUserListView extends StatelessWidget {
                       );
                     },
                   ),
-                );
+                ).then((value) => {navigationCallback()});
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

@@ -21,7 +21,9 @@ class _GithubFavoritesPageState extends State<GithubFavoritesPage> {
       body: Consumer<FavoriteGithubUserProvider>(
         builder: (context, favoriteGithubUserProvider, _) {
           final favorites = favoriteGithubUserProvider.favoriteUsers;
-          return SafeArea(child: GithubUserListView(favorites));
+          return SafeArea(
+            child: GithubUserListView(favorites, getFavorites),
+          );
         },
       ),
     );
@@ -29,7 +31,14 @@ class _GithubFavoritesPageState extends State<GithubFavoritesPage> {
 
   @override
   void initState() {
-    Provider.of<FavoriteGithubUserProvider>(context, listen: false).getFavorites();
+    getFavorites();
     super.initState();
+  }
+
+  void getFavorites() {
+    Provider.of<FavoriteGithubUserProvider>(
+      context,
+      listen: false,
+    ).getFavorites();
   }
 }

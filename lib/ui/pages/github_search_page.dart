@@ -93,6 +93,7 @@ class _SearchUserPageState extends State<SearchUserPage> {
                           : Expanded(
                               child: GithubUserListView(
                                 searchGithubUserProvider.githubUsers,
+                                () {},
                               ),
                             ),
                 ],

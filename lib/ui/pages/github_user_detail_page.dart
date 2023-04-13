@@ -110,6 +110,7 @@ class _GithubUserDetailPageState extends State<GithubUserDetailPage>
                               ) {
                                 return GithubUserListView(
                                   userFollowingProvider.githubUsers,
+                                  getFavorites,
                                 );
                               },
                             ),
@@ -125,6 +126,7 @@ class _GithubUserDetailPageState extends State<GithubUserDetailPage>
                               ) {
                                 return GithubUserListView(
                                   userFollowersProvider.githubUsers,
+                                  getFavorites,
                                 );
                               },
                             ),
@@ -164,5 +166,12 @@ class _GithubUserDetailPageState extends State<GithubUserDetailPage>
         },
       ),
     );
+  }
+
+  void getFavorites() {
+    Provider.of<FavoriteGithubUserProvider>(
+      context,
+      listen: false,
+    ).getFavorites();
   }
 }
