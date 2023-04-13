@@ -62,8 +62,8 @@ class _SearchUserPageState extends State<SearchUserPage> {
                   (searchGithubUserProvider.resultState == ResultState.noData)
                       ? const Expanded(
                           child: Align(
-                            child: Text("no data"),
                             alignment: Alignment.center,
+                            child: Text("no data"),
                           ),
                         )
                       : (searchGithubUserProvider.resultState ==

@@ -11,6 +11,7 @@ import '../widgets/github_user_list_view.dart';
 
 class GithubUserDetailPage extends StatefulWidget {
   final GithubUser githubUser;
+
   const GithubUserDetailPage({
     Key? key,
     required this.githubUser,
@@ -136,15 +137,18 @@ class _GithubUserDetailPageState extends State<GithubUserDetailPage>
               ),
             ),
             floatingActionButton: ChangeNotifierProvider(
-              create: (context) => FavoriteGithubUserProvider(),
+              create: (context) =>
+                  FavoriteGithubUserProvider(githubUser: widget.githubUser),
               child: Consumer<FavoriteGithubUserProvider>(
                 builder: (
                   context,
                   favoriteGithubUserProvider,
-                  widget,
+                  _,
                 ) {
                   return FloatingActionButton(
-                    onPressed: favoriteGithubUserProvider.setFavorite,
+                    onPressed: () async {
+                      favoriteGithubUserProvider.setFavorite(widget.githubUser);
+                    },
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     child: Icon(
                       Icons.heart_broken,
