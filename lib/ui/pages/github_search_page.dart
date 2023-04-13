@@ -1,10 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:githubapp/ui/pages/github_favorites_page.dart';
 import 'package:githubapp/ui/providers/search_github_users_provider.dart';
 import 'package:githubapp/ui/widgets/github_user_list_view.dart';
 import 'package:githubapp/util/result_state.dart';
 import 'package:provider/provider.dart';
+
+import '../providers/favorite_github_user_provider.dart';
 
 class SearchUserPage extends StatefulWidget {
   const SearchUserPage({Key? key, required String title}) : super(key: key);
@@ -15,6 +18,7 @@ class SearchUserPage extends StatefulWidget {
 
 class _SearchUserPageState extends State<SearchUserPage> {
   Timer? _debounce;
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -26,7 +30,19 @@ class _SearchUserPageState extends State<SearchUserPage> {
             title: const Text("Github Search User"),
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ChangeNotifierProvider(
+                          create: (context) => FavoriteGithubUserProvider(),
+                          child: const GithubFavoritesPage(),
+                        );
+                      },
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.favorite),
               ),
             ],

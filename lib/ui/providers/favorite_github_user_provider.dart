@@ -20,11 +20,18 @@ class FavoriteGithubUserProvider extends ChangeNotifier {
 
   bool get isLiked => _isLiked;
 
+  List<GithubUser> _favoriteUsers = [];
+
+  List<GithubUser> get favoriteUsers => _favoriteUsers;
+
   Future<List<GithubUser>> getFavorites() async {
     final jsonArray = json.decode(
             await pref.getString(SharedPreferenceKey.FAVORITE_USERS) ?? "[]")
         as List;
-    return jsonArray.map((e) => GithubUser.fromJson(e)).toList();
+    final favorites = jsonArray.map((e) => GithubUser.fromJson(e)).toList();
+    _favoriteUsers = favorites;
+    notifyListeners();
+    return favorites;
   }
 
   Future<void> setFavorite(GithubUser githubUser) async {
